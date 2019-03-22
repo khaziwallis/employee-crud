@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import {Provider} from 'react-redux';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import configureStore from './store/configureStore';
+//import initialState from './store/initialState';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+//import { getEmployeesService } from './services/employeeServices';
+import { getManagersService } from './services/managerServices';
+
+// can pass inital state here, if you want state to be rendered from server of localStorage
+let store = configureStore();
+
+//if u want data to be there before application initiate, tou can dispatch here.
+//store.dispatch(getEmployeesService());
+store.dispatch(getManagersService());
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+document.getElementById('root'));
